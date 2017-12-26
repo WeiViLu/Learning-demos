@@ -29,9 +29,10 @@
   <div id="todolist">
     <img src="todolist.jpg" alt="title">
     <h1>{{title}}</h1>
+    <input type="text" v-model="newItem" @key.enter="addNew">
     <ul>
       <li v-for="(item,index) in items" >
-        <input type="checkbox"><span v-bind:class="isFinished?finished:''">{{index+1}}、{{item.label}}</span>
+        <span v-bind:class="{finished:item.isFinished}" @click="toggleFinish(item)">{{index+1}}、{{item.label}}</span>
       </li>
     </ul>
   </div>
@@ -56,7 +57,13 @@
           label: '洗澡',
           isFinished: true
         },
-      ]
+      ],
+      newItem:''
+    },
+    methods:{
+      toggleFinish(item){
+        item.isFinished=!item.isFinished;
+      }
     }
   })
 </script>
