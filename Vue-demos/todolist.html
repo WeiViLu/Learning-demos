@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+    ul{
+      list-style: none;
+    }
+    .head{
+      text-align: center;
+    }
+    h1{
+      color:darksalmon;
+    }
+    .finished{
+      text-decoration: line-through red;
+    }
+  </style>
+</head>
+<body>
+  <div id="todolist">
+    <img src="todolist.jpg" alt="title">
+    <h1>{{title}}</h1>
+    <ul>
+      <li v-for="(item,index) in items" >
+        <input type="checkbox"><span v-bind:class="isFinished?finished:''">{{index+1}}、{{item.label}}</span>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  var app=new Vue({
+    el:'#todolist',
+    data:{
+      title:'This is a todo list',
+      items:[
+        {
+          label:'做饭',
+          isFinished:false
+        },
+        {
+          label: '遛狗',
+          isFinished: false
+        },
+        {
+          label: '洗澡',
+          isFinished: true
+        },
+      ]
+    }
+  })
+</script>
