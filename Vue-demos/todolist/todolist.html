@@ -29,7 +29,7 @@
   <div id="todolist">
     <img src="todolist.jpg" alt="title">
     <h1>{{title}}</h1>
-    <input type="text" v-model="newItem" @key.enter="addNew">
+    <input type="text" v-model="newItem" @keyup.enter="addNew">
     <ul>
       <li v-for="(item,index) in items" >
         <span v-bind:class="{finished:item.isFinished}" @click="toggleFinish(item)">{{index+1}}、{{item.label}}</span>
@@ -44,25 +44,37 @@
     el:'#todolist',
     data:{
       title:'This is a todo list',
-      items:[
-        {
-          label:'做饭',
-          isFinished:false
-        },
-        {
-          label: '遛狗',
-          isFinished: false
-        },
-        {
-          label: '洗澡',
-          isFinished: true
-        },
-      ],
+      items:this.fetch(),
       newItem:''
+    },
+    watch:{
+      items:{
+        handler:function(items){
+          this.save(items);
+        },
+        deep:true
+      }
+    },
+    mounted(){
     },
     methods:{
       toggleFinish(item){
         item.isFinished=!item.isFinished;
+      },
+      addNew(){
+        this.items.push({
+          label:this.newItem,
+          isFinished:false
+        })
+        this.newItem='';
+      },
+      //存储
+      fetch(){
+        return JSON.parse(window.localStorage.getItem(
+          'todo-vuejs'));
+      },
+      save(items){
+       window.localStorage.setItem('todo-vuejs',JSON.stringify(items));
       }
     }
   })
