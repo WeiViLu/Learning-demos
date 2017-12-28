@@ -44,7 +44,7 @@
     el:'#todolist',
     data:{
       title:'This is a todo list',
-      items:this.fetch(),
+      items:[],
       newItem:''
     },
     watch:{
@@ -56,6 +56,7 @@
       }
     },
     mounted(){
+      this.items=this.fetch();
     },
     methods:{
       toggleFinish(item){
@@ -71,7 +72,7 @@
       //存储
       fetch(){
         return JSON.parse(window.localStorage.getItem(
-          'todo-vuejs'));
+          'todo-vuejs'))||[];
       },
       save(items){
        window.localStorage.setItem('todo-vuejs',JSON.stringify(items));
